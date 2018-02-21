@@ -50,16 +50,6 @@ namespace MyWebSearch
                         Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
                 }
 
-
-                //while ((selIndex = ListViewDoc.SelectedIndex)>=0)
-                //{
-                //    if (ListDoc[selIndex].SearchWithGoogle==true)
-                //        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + ListDoc[selIndex].Name);
-                //    else
-                //        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + ListDoc[selIndex].Name);
-
-                    
-                //}
            
 
 
