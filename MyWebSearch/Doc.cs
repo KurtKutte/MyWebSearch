@@ -18,19 +18,19 @@ namespace MyWebSearch
         }
 
 
-        private bool searchWithGoogle;
+        private bool activ;
 
-        public bool SearchWithGoogle
+        public bool Activ
         {
-            get { return searchWithGoogle; }
-            set { searchWithGoogle = value; }
+            get { return activ; }
+            set { activ = value; }
         }
 
         public override string ToString()
         {
             string s = "true";
 
-            if (this.searchWithGoogle == false)
+            if (this.activ == false)
             {
                 s = "false";
             }

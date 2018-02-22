@@ -23,71 +23,92 @@ namespace MyWebSearch
     public partial class MainWindow : Window
     {
         List<Doc> ListDoc = new List<Doc>();
+        List<File> ListFile = new List<File>();
+        string MyPath = "";
+
 
         public MainWindow()
         {
             InitializeComponent();
+
+            ReadFiles();
+            ListFileToView();
+
             ReadDocs();
-            ShowListDoc();
+            ListDocToView();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ReadFiles()
         {
-
-         
-
-            try
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (!Directory.Exists(docPath + "\\MyWebSearch"))
             {
+                MessageBoxResult result = MessageBox.Show("Ordner 'MyWebSearch' im Dokumenten-Verzeichnis existiert nicht\nEinrichten ?", "Achtung", MessageBoxButton.YesNo);
 
-                foreach (var item in ListViewDoc.SelectedItems)
+                if (result == MessageBoxResult.Yes)
                 {
-                    ListViewItem lvi = (ListViewItem)item;
-                    Doc doc = (Doc)lvi.Content;
-
-                    if (doc.SearchWithGoogle == true)
-                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
-                    else
-                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
+                    Directory.CreateDirectory(docPath + "\\MyWebSearch");
+                    MyPath = docPath + "\\MyWebSearch";
                 }
 
-           
-
 
             }
-            catch (Exception)
+            else
+            {
+                MyPath = docPath + "\\MyWebSearch";
+            }
+
+
+
+
+            string[] files = System.IO.Directory.GetFiles(MyPath, "*.txt", System.IO.SearchOption.TopDirectoryOnly);
+            if (files.Length > 0)
+            {
+                foreach (var item in files)
+                {
+                    string name = item.Substring(item.LastIndexOf('\\') + 1);
+                    File f = new File();
+                    f.FileName = name;
+                    ListFile.Add(f);
+                }
+            }
+            else
             {
 
+                System.IO.File.WriteAllText(MyPath + "\\" + "MyWebSearch.txt", "wikipedia.de" + "\t" + "true");
+
+                File f = new File();
+                f.FileName = "MyWebSearch.txt";
+                ListFile.Add(f);
+                files = new string[1];
+                files[0] = "MyWebSearch.txt";
+       
+     
 
             }
 
+            if (Properties.Settings.Default.FileIndexNow == -1 | Properties.Settings.Default.FileIndexNow + 1 > files.Length)
+            {
+                Properties.Settings.Default.FileIndexNow = 0;
+                Properties.Settings.Default.Save();
+            }
 
+        
 
-            //// Process.Start("microsoft-edge:http://www.google.com/search?q=thread site:openbook.rheinwerk-verlag.de/csharp") ;
-            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(thread AND Array) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
-            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(threadpool) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
         }
 
-        private void ButtonAddDoc_Click(object sender, RoutedEventArgs e)
+        private void ListFileToView()
         {
-            Doc doc = new Doc();
-            doc.Name = TextBoxAddDoc.Text;
-            if (CheckBoxGoogle.IsChecked == true)
-                doc.SearchWithGoogle = true;
-            else
-                doc.SearchWithGoogle = false;
-
-            ListDoc.Add(doc);
-
-            WriteDocs();
-
-            ShowListDoc();
-            TextBoxAddDoc.Text = "";
-
-
-
+            ListViewFiles.Items.Clear();
+            foreach (var item in ListFile)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Content = item;
+                ListViewFiles.Items.Add(lvi);
+            }
         }
 
-        private void ShowListDoc()
+        private void ListDocToView()
         {
             ListViewDoc.Items.Clear();
 
@@ -97,22 +118,28 @@ namespace MyWebSearch
                 lvi.Content = item;
                 ListViewDoc.Items.Add(lvi);
             }
-            
+
         }
 
-    
         private void ReadDocs()
         {
             string line;
             ListDoc.Clear();
 
-            if (!File.Exists(@"D:\Documents\Temp\MyFile.txt"))
+            if (Properties.Settings.Default.FileIndexNow < 0)
+            {
+                return;
+            }
+
+            if (!System.IO.File.Exists(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
                 return;
 
+            //if (!File.Exists(@"D:\Documents\Temp\MyFile.txt"))
+            //    return;
 
-            System.IO.StreamReader file = new System.IO.StreamReader(@"D:\Documents\Temp\MyFile.txt");
+            System.IO.StreamReader sr = new System.IO.StreamReader(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName);
 
-            while ((line = file.ReadLine()) != null)
+            while ((line = sr.ReadLine()) != null)
             {
                 string[] sa = line.Split('\t');
 
@@ -120,24 +147,25 @@ namespace MyWebSearch
                 doc.Name = sa[0];
 
                 if (sa[1] == "false")
-                    doc.SearchWithGoogle = false;
+                    doc.Activ = false;
                 else
-                    doc.SearchWithGoogle = true;
+                    doc.Activ = true;
 
                 ListDoc.Add(doc);
 
             }
+            sr.Close();
         }
 
         private void WriteDocs()
         {
-            if (File.Exists(@"D:\Documents\Temp\MyFile.txt"))
+            if (System.IO.File.Exists(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
             {
-                File.Delete(@"D:\Documents\Temp\MyFile.txt");
+                System.IO.File.Delete(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName);
             }
-           
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"D:\Documents\Temp\MyFile.txt"))
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
             {
 
                 foreach (var item in ListDoc)
@@ -148,11 +176,141 @@ namespace MyWebSearch
             }
         }
 
+
+        private void ButtonFileAdd_Click(object sender, RoutedEventArgs e)
+        {
+            File f = new File();
+            string s = "";
+
+            if (TextBoxFileAdd.Text.Contains('.'))
+            {
+                s = TextBoxFileAdd.Text;
+            }
+            else
+            {
+                s = TextBoxFileAdd.Text+".txt";
+            }
+
+            if (s.Length<5)
+            {
+                MessageBox.Show("Name zu kurz\nanderen Namen wählen");
+                return;
+            }
+
+
+            foreach (var item in ListFile)
+            {
+                if (item.FileName==s)
+                {
+                    MessageBox.Show("Datei existiert schon\nanderen Namen wählen");
+                    return;
+                }
+            }
+
+
+
+
+            f.FileName = s;
+            ListFile.Add(f);
+            System.IO.File.WriteAllText(MyPath + "\\" + s, "");
+            ListFileToView();
+
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CheckBoxGoogle.IsChecked == false && CheckBoxBing.IsChecked == false)
+            {
+                CheckBoxGoogle.IsChecked = true;
+            }
+
+
+            string strSearch = TextBoxSearch1.Text + " ) site:";
+
+            foreach (var item in ListDoc)
+            {
+                if (item.Activ)
+                {
+                    if (CheckBoxGoogle.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + item.Name);
+                    if (CheckBoxBing.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + item.Name);
+                }
+
+            }
+
+
+            //try
+            //{
+
+            //    foreach (var item in ListViewDoc.SelectedItems)
+            //    {
+            //        ListViewItem lvi = (ListViewItem)item;
+            //        Doc doc = (Doc)lvi.Content;
+
+            //        if (doc.Activ == true)
+            //            Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
+            //        else
+            //            Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
+            //    }
+
+
+
+
+            //}
+            //catch (Exception)
+            //{
+
+
+            //}
+
+
+
+            //// Process.Start("microsoft-edge:http://www.google.com/search?q=thread site:openbook.rheinwerk-verlag.de/csharp") ;
+            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(thread AND Array) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
+            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(threadpool) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
+        }
+
+        private void ButtonDocAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Doc doc = new Doc();
+            doc.Name = TextBoxDocAdd.Text;
+            doc.Activ = true;
+
+
+            ListDoc.Add(doc);
+
+            WriteDocs();
+
+            ListDocToView();
+            TextBoxDocAdd.Text = "";
+
+
+
+        }
+
+        private void ButtonLinkBing_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("http://help.bing.microsoft.com/#apex/18/de-de/10001/-1");
+        }
+
+        private void ButtonLinkGoogle_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://support.google.com/websearch/answer/2466433?hl=de");
+        }
+
         private void ListViewDoc_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             try
             {
                 int selIndex = ListViewDoc.SelectedIndex;
+
+                if (selIndex < 0)
+                {
+                    return;
+                }
+
 
                 MessageBoxResult result = MessageBox.Show("Soll  '" + ListDoc[selIndex].Name + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
 
@@ -160,16 +318,103 @@ namespace MyWebSearch
                 {
                     ListDoc.RemoveAt(selIndex);
                     WriteDocs();
-                    ShowListDoc();
+                    ListDocToView();
 
                 }
             }
             catch (Exception)
             {
 
-               
+
             }
-            
+
         }
+
+        private void ListViewDoc_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            int selIndex = ListViewDoc.SelectedIndex;
+
+            if (selIndex <0)
+            {
+                return;
+            }
+
+            ListDoc[selIndex].Activ = !ListDoc[selIndex].Activ;
+            WriteDocs();
+            ListDocToView();
+
+
+        }
+
+        private void ListViewFiles_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            int selIndex = ListViewFiles.SelectedIndex;
+
+            if (selIndex < 0)
+            {
+                return;
+            }
+
+
+            Properties.Settings.Default.FileIndexNow = selIndex;
+            Properties.Settings.Default.Save();
+
+
+            ReadDocs();
+            ListDocToView();
+        }
+
+        private void ListViewFiles_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                int selIndex = ListViewFiles.SelectedIndex;
+
+                if (selIndex < 0)
+                {
+                    return;
+                }
+
+                MessageBoxResult result = MessageBox.Show("Soll  '" + ListFile[selIndex].FileName + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+
+                    if (System.IO.File.Exists(MyPath + "\\" + ListFile[selIndex].FileName))
+                    {
+                        System.IO.File.Delete(MyPath + "\\" + ListFile[selIndex].FileName);
+                    }
+
+                    ListFile.RemoveAt(selIndex);
+                    ListFileToView();
+
+                    if (ListFile.Count > 0)
+                    {
+                        Properties.Settings.Default.FileIndexNow = 0;
+                        Properties.Settings.Default.Save();
+                        ListViewFiles.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.FileIndexNow = -1;
+                        Properties.Settings.Default.Save();
+
+                    }
+
+
+                    ReadDocs();
+                    ListDocToView();
+
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
+
+
+
     }
 }

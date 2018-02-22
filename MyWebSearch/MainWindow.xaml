@@ -8,43 +8,66 @@
         Title="MainWindow" Height="330.113" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="17*"/>
-            <ColumnDefinition Width="83*"/>
-            <ColumnDefinition Width="82*"/>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="89*"/>
-            <ColumnDefinition Width="118*"/>
-            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="68*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="58*"/>
+            <ColumnDefinition Width="154*"/>
+            <ColumnDefinition Width="106*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="26*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="ButtonSearch" Content="Search" Click="Button_Click" Grid.Row="1" Grid.Column="1"/>
-        <TextBox x:Name="TextBoxSearch1" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap"/>
-        <TextBox x:Name="TextBoxSearch2" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap"/>
-        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="3" Grid.Column="4" Grid.Row="1" Grid.RowSpan="9" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" >
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="10" Grid.Column="1" Grid.Row="12" Grid.RowSpan="5"/>
+        <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" Grid.Row="15" Grid.Column="2"/>
+        <TextBox x:Name="TextBoxSearch1" Grid.ColumnSpan="6" Grid.Column="4" Grid.Row="15" />
+        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="4" Grid.Column="7" Grid.RowSpan="8" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" >
             <ListView.View>
-                <GridView>                    <GridViewColumn Header="Name   " DisplayMemberBinding="{Binding Name}"/>                    <GridViewColumn Header="google" DisplayMemberBinding="{Binding SearchWithGoogle}"/>
+                <GridView>
+                    <GridViewColumn Header="active" DisplayMemberBinding="{Binding Activ}"/>
+                    <GridViewColumn Header="Page  " DisplayMemberBinding="{Binding Name}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="TextBoxAddDoc" Grid.ColumnSpan="3" Grid.Column="4" Grid.Row="11" TextWrapping="Wrap"/>
-        <Button x:Name="ButtonAddDoc" Content="Add" Grid.Column="1" Grid.Row="11" Click="ButtonAddDoc_Click" />
-        <TextBox x:Name="TextBoxSearch3" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"/>
-        <CheckBox x:Name="CheckBoxGoogle" Content="Google" Grid.Column="2" Grid.Row="11" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="TextBoxDocAdd" Grid.ColumnSpan="3" Grid.Column="8" Grid.Row="10" />
+        <Button x:Name="ButtonDocAdd" Content="Add Page" Grid.Column="7" Grid.Row="10" Click="ButtonDocAdd_Click" />
+        <CheckBox x:Name="CheckBoxGoogle" Content="Google" Grid.Column="4" Grid.Row="13" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+        <CheckBox x:Name="CheckBoxBing" Content="Bing" Grid.Column="7" Grid.Row="13" VerticalContentAlignment="Center" Grid.ColumnSpan="1"/>
+        <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="4" Grid.Row="10" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Grid.ColumnSpan="2"/>
+        <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="2" Grid.Row="10" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+        <ListView x:Name="ListViewFiles" Grid.ColumnSpan="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="6" MouseLeftButtonUp="ListViewFiles_MouseLeftButtonUp" MouseRightButtonUp="ListViewFiles_MouseRightButtonUp">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="File  " DisplayMemberBinding="{Binding FileName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="2" Grid.Row="8" Click="ButtonFileAdd_Click"/>
+        <TextBox x:Name="TextBoxFileAdd" Grid.ColumnSpan="2" Grid.Column="4" Grid.Row="8" TextWrapping="Wrap"/>
+
 
     </Grid>
 </Window>
