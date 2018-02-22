@@ -311,6 +311,16 @@ namespace MyWebSearch
                     return;
                 }
 
+                TextBoxDocAdd.Text = ListDoc[selIndex].Name;
+
+
+
+                var x = ListViewDoc.SelectedItems;
+
+                var z = x.Count;
+
+                ListViewItem y = (ListViewItem)x[0];
+
 
                 MessageBoxResult result = MessageBox.Show("Soll  '" + ListDoc[selIndex].Name + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
 
@@ -338,10 +348,11 @@ namespace MyWebSearch
             {
                 return;
             }
+            TextBoxDocAdd.Text = ListDoc[selIndex].Name;
 
-            ListDoc[selIndex].Activ = !ListDoc[selIndex].Activ;
-            WriteDocs();
-            ListDocToView();
+            //ListDoc[selIndex].Activ = !ListDoc[selIndex].Activ;
+            //WriteDocs();
+            //ListDocToView();
 
 
         }
@@ -414,7 +425,31 @@ namespace MyWebSearch
             }
         }
 
+        private void TextBoxDocAdd_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                ButtonDocAdd_Click(null, null);
+                TextBoxDocAdd.Text = "";
+            }
+        }
 
+        private void TextBoxFileAdd_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                ButtonFileAdd_Click(null, null);
+                TextBoxFileAdd.Text = "";
+            }
+        }
 
+        private void TextBoxSearch1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                ButtonSearch_Click(null, null);
+             
+            }
+        }
     }
 }
