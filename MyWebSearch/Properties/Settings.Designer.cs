@@ -34,5 +34,17 @@ namespace MyWebSearch.Properties {
                 this["FileIndexNow"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FileNameNow {
+            get {
+                return ((string)(this["FileNameNow"]));
+            }
+            set {
+                this["FileNameNow"] = value;
+            }
+        }
     }
 }

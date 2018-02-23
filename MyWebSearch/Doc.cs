@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyWebSearch
 {
-    class Doc
+    class MyDoc: IComparable<MyDoc>
     {
 
         private string name;
@@ -17,6 +17,13 @@ namespace MyWebSearch
             set { name = value; }
         }
 
+        private string group;
+
+        public string Group
+        {
+            get { return group; }
+            set { group = value; }
+        }
 
         private bool activ;
 
@@ -34,7 +41,18 @@ namespace MyWebSearch
             {
                 s = "false";
             }
-            return Name + "\t" + s;
+            return Group + "\t" + Name + "\t" + s;
+        }
+
+        public int CompareTo(MyDoc comparePart)
+        {
+            // A null value means that this object is greater.
+            if (comparePart == null)
+                return 1;
+
+            else
+                return (this.group + this.Name).CompareTo(comparePart.Group + comparePart.Name);
+            //return this.Name.CompareTo(comparePart.Name);
         }
     }
 }

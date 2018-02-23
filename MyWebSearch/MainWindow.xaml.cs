@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,8 +23,8 @@ namespace MyWebSearch
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Doc> ListDoc = new List<Doc>();
-        List<File> ListFile = new List<File>();
+        List<MyDoc> ListDoc = new List<MyDoc>();
+        List<MyFile> ListFile = new List<MyFile>();
         string MyPath = "";
 
 
@@ -67,7 +68,7 @@ namespace MyWebSearch
                 foreach (var item in files)
                 {
                     string name = item.Substring(item.LastIndexOf('\\') + 1);
-                    File f = new File();
+                    MyFile f = new MyFile();
                     f.FileName = name;
                     ListFile.Add(f);
                 }
@@ -77,23 +78,25 @@ namespace MyWebSearch
 
                 System.IO.File.WriteAllText(MyPath + "\\" + "MyWebSearch.txt", "wikipedia.de" + "\t" + "true");
 
-                File f = new File();
+                MyFile f = new MyFile();
                 f.FileName = "MyWebSearch.txt";
                 ListFile.Add(f);
                 files = new string[1];
                 files[0] = "MyWebSearch.txt";
-       
-     
+
+
 
             }
 
-            if (Properties.Settings.Default.FileIndexNow == -1 | Properties.Settings.Default.FileIndexNow + 1 > files.Length)
+
+
+            if (Properties.Settings.Default.FileNameNow == "")
             {
-                Properties.Settings.Default.FileIndexNow = 0;
+                Properties.Settings.Default.FileNameNow = files[0];
                 Properties.Settings.Default.Save();
             }
 
-        
+
 
         }
 
@@ -111,14 +114,24 @@ namespace MyWebSearch
         private void ListDocToView()
         {
             ListViewDoc.Items.Clear();
+            int nr = 0;
 
             foreach (var item in ListDoc)
             {
                 ListViewItem lvi = new ListViewItem();
                 lvi.Content = item;
+                if (item.Activ)
+                {
+                    lvi.Background = Brushes.LightGreen;
+                }
+                else
+                {
+                    lvi.Background = Brushes.White;
+                }
                 ListViewDoc.Items.Add(lvi);
+                nr += 1;
             }
-
+            LabelCount.Content = nr.ToString();
         }
 
         private void ReadDocs()
@@ -126,46 +139,69 @@ namespace MyWebSearch
             string line;
             ListDoc.Clear();
 
-            if (Properties.Settings.Default.FileIndexNow < 0)
+
+            if (Properties.Settings.Default.FileNameNow == "")
             {
                 return;
             }
 
-            if (!System.IO.File.Exists(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
+            if (!System.IO.File.Exists(MyPath + "\\" + Properties.Settings.Default.FileNameNow))
                 return;
 
-            //if (!File.Exists(@"D:\Documents\Temp\MyFile.txt"))
-            //    return;
 
-            System.IO.StreamReader sr = new System.IO.StreamReader(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName);
+            System.IO.StreamReader sr = new System.IO.StreamReader(MyPath + "\\" + Properties.Settings.Default.FileNameNow);
 
-            while ((line = sr.ReadLine()) != null)
+            try
             {
-                string[] sa = line.Split('\t');
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] sa = line.Split('\t');
 
-                Doc doc = new Doc();
-                doc.Name = sa[0];
+                    MyDoc doc = new MyDoc();
+                    doc.Group = sa[0];
+                    doc.Name = sa[1];
 
-                if (sa[1] == "false")
-                    doc.Activ = false;
-                else
-                    doc.Activ = true;
+                    if (sa[2] == "false")
+                        doc.Activ = false;
+                    else
+                        doc.Activ = true;
 
-                ListDoc.Add(doc);
+                    ListDoc.Add(doc);
+
+                }
+            }
+            catch (Exception e)
+            {
+                string name = MyPath + "\\" + Properties.Settings.Default.FileNameNow;
+                MessageBox.Show("Datei\n" + name + "\nkann nicht gelesen werden\n" + e.Message);
+            }
+            finally
+            {
+                sr.Close();
+            }
+
+            for (int i = 0; i < ListFile.Count; i++)
+            {
+                if (ListFile[i].FileName == Properties.Settings.Default.FileNameNow)
+                {
+                    ListViewFiles.SelectedIndex = i;
+                    break;
+                }
 
             }
-            sr.Close();
+
+
         }
 
         private void WriteDocs()
         {
-            if (System.IO.File.Exists(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
+            if (System.IO.File.Exists(MyPath + "\\" + Properties.Settings.Default.FileNameNow))
             {
-                System.IO.File.Delete(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName);
+                System.IO.File.Delete(MyPath + "\\" + Properties.Settings.Default.FileNameNow);
             }
 
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(MyPath + "\\" + ListFile[Properties.Settings.Default.FileIndexNow].FileName))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(MyPath + "\\" + Properties.Settings.Default.FileNameNow))
             {
 
                 foreach (var item in ListDoc)
@@ -176,10 +212,213 @@ namespace MyWebSearch
             }
         }
 
+        private void SearchNext(string strSearch)
+        {
+            LabelBusy.Content = "Abfrage läuft";
+
+            for (int i = 0; i < ListDoc.Count; i++)
+            {
+                if (ListDoc[i].Activ)
+                {
+                    if (CheckBoxGoogle.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + ListDoc[i].Name);
+                    if (CheckBoxBing.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + ListDoc[i].Name);
+
+                    ListDoc[i].Activ = false;
+                    WriteDocs();
+                    ListDocToView();
+                    break;
+                }
+
+
+            }
+
+
+            LabelBusy.Content = "";
+        }
+
+        private void SearchAll(string strSearch)
+        {
+            LabelBusy.Content = "Abfrage läuft";
+            foreach (var item in ListDoc)
+            {
+                if (item.Activ)
+                {
+                    if (CheckBoxGoogle.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + item.Name);
+                    if (CheckBoxBing.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + item.Name);
+                }
+                Thread.Sleep(2000);
+            }
+            LabelBusy.Content = "";
+        }
+
+        private void ButtonDocActiveAll_Click(object sender, RoutedEventArgs e)
+        {
+
+            foreach (ListViewItem item in ListViewDoc.Items)
+            {
+                item.IsSelected = true;
+            }
+
+            ListViewDocItemBrushes();
+
+        }
+
+        private void ButtonDocsDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+            int selIndex = ListViewDoc.SelectedIndex;
+
+            if (selIndex < 0)
+            {
+                MessageBox.Show("Kein Element markiert !");
+                return;
+            }
+
+            try
+            {
+
+                TextBoxDocGroupAdd.Text = ListDoc[selIndex].Group;
+                TextBoxDocAdd.Text = ListDoc[selIndex].Name;
+
+
+                var selItems = ListViewDoc.SelectedItems;
+
+
+                MessageBoxResult result = MessageBox.Show("Sollen die markierten Such-Seiten gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    for (int i = 0; i < selItems.Count; i++)
+                    {
+                        ListViewItem selItemSingle = (ListViewItem)selItems[i];
+                        MyDoc selDocSingle = (MyDoc)selItemSingle.Content;
+
+
+                        foreach (var item in ListDoc)
+                        {
+                            if (item.Name == selDocSingle.Name)
+                            {
+                                ListDoc.Remove(item);
+                                break;
+                            }
+                        }
+
+                    }
+
+                    ListDoc.Sort();
+
+                    WriteDocs();
+                    ListDocToView();
+
+                    TextBoxDocGroupAdd.Text = "";
+                    TextBoxDocAdd.Text = "";
+
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
+
+        private void ButtonDocActive_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int selIndex = ListViewDoc.SelectedIndex;
+
+                if (selIndex < 0)
+                {
+                    MessageBox.Show("Kein Element markiert !");
+                    return;
+                }
+
+                TextBoxDocGroupAdd.Text = ListDoc[selIndex].Group;
+                TextBoxDocAdd.Text = ListDoc[selIndex].Name;
+
+                var selItems = ListViewDoc.SelectedItems;
+
+
+                for (int i = 0; i < selItems.Count; i++)
+                {
+                    ListViewItem selItemSingle = (ListViewItem)selItems[i];
+                    MyDoc selDocSingle = (MyDoc)selItemSingle.Content;
+
+
+                    for (int k = 0; k < ListDoc.Count; k++)
+                    {
+                        if (ListDoc[k].Name == selDocSingle.Name)
+                        {
+                            ListDoc[k].Activ = true;
+                            break;
+                        }
+                    }
+
+                }
+
+                WriteDocs();
+                ListDocToView();
+
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
+
+        private void ButtonDocsFalse_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int selIndex = ListViewDoc.SelectedIndex;
+
+                if (selIndex < 0)
+                {
+                    MessageBox.Show("Kein Element markiert !");
+                    return;
+                }
+
+                TextBoxDocGroupAdd.Text = ListDoc[selIndex].Group;
+                TextBoxDocAdd.Text = ListDoc[selIndex].Name;
+
+                var selItems = ListViewDoc.SelectedItems;
+
+                for (int i = 0; i < selItems.Count; i++)
+                {
+                    ListViewItem selItemSingle = (ListViewItem)selItems[i];
+                    MyDoc selDocSingle = (MyDoc)selItemSingle.Content;
+
+
+                    for (int k = 0; k < ListDoc.Count; k++)
+                    {
+                        if (ListDoc[k].Name == selDocSingle.Name)
+                        {
+                            ListDoc[k].Activ = false;
+                            break;
+                        }
+                    }
+
+                }
+
+                WriteDocs();
+                ListDocToView();
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
 
         private void ButtonFileAdd_Click(object sender, RoutedEventArgs e)
         {
-            File f = new File();
+            MyFile f = new MyFile();
             string s = "";
 
             if (TextBoxFileAdd.Text.Contains('.'))
@@ -188,10 +427,10 @@ namespace MyWebSearch
             }
             else
             {
-                s = TextBoxFileAdd.Text+".txt";
+                s = TextBoxFileAdd.Text + ".txt";
             }
 
-            if (s.Length<5)
+            if (s.Length < 5)
             {
                 MessageBox.Show("Name zu kurz\nanderen Namen wählen");
                 return;
@@ -200,7 +439,7 @@ namespace MyWebSearch
 
             foreach (var item in ListFile)
             {
-                if (item.FileName==s)
+                if (item.FileName == s)
                 {
                     MessageBox.Show("Datei existiert schon\nanderen Namen wählen");
                     return;
@@ -219,72 +458,109 @@ namespace MyWebSearch
 
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)
         {
+            bool OneItemActive = false;
+
+            foreach (var item in ListDoc)
+            {
+                if (item.Activ)
+                {
+                    OneItemActive = true;
+                    break;
+                }
+
+            }
+
+            if (!OneItemActive)
+            {
+                MessageBox.Show("kein Eintrag AKTIV - Suche nicht möglich");
+                return;
+            }
 
             if (CheckBoxGoogle.IsChecked == false && CheckBoxBing.IsChecked == false)
             {
                 CheckBoxGoogle.IsChecked = true;
             }
 
-
             string strSearch = TextBoxSearch1.Text + " ) site:";
 
-            foreach (var item in ListDoc)
+            if (CheckBoxStepMode.IsChecked == false)
             {
-                if (item.Activ)
-                {
-                    if (CheckBoxGoogle.IsChecked == true)
-                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + item.Name);
-                    if (CheckBoxBing.IsChecked == true)
-                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + item.Name);
-                }
-
+                SearchAll(strSearch);
+            }
+            else
+            {
+                SearchNext(strSearch);
             }
 
 
-            //try
-            //{
+        }
 
-            //    foreach (var item in ListViewDoc.SelectedItems)
-            //    {
-            //        ListViewItem lvi = (ListViewItem)item;
-            //        Doc doc = (Doc)lvi.Content;
+        private void ButtonSyntax_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Gib die wichtigsten Wörter ein: glatthaar foxterrier dreifarbig \n\n " +
+                "Setze die gesuchten Wörter zwischen Anführungszeichen:\n \"glatthaar terrier\"  \n\n" +
+                "Gib ODER zwischen allen gesuchten Wörtern ein:\n miniatur OR standard\n\n" +
+                "Setze ein Minuszeichen direkt vor Wörter, die nicht angezeigt werden sollen:\n -rauhhaar, -\"jack russell\" ");
+        }
 
-            //        if (doc.Activ == true)
-            //            Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
-            //        else
-            //            Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + TextBoxSearch1.Text + " ) site:" + doc.Name);
-            //    }
-
-
-
-
-            //}
-            //catch (Exception)
-            //{
-
-
-            //}
-
-
-
-            //// Process.Start("microsoft-edge:http://www.google.com/search?q=thread site:openbook.rheinwerk-verlag.de/csharp") ;
-            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(thread AND Array) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
-            //Process.Start("microsoft-edge:http://www.bing.de/search?q=(threadpool) (site:openbook.rheinwerk-verlag.de/csharp OR site:stackoverflow.com)");
+        private void ButtonPageStart_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("microsoft-edge:" + TextBoxDocAdd.Text);
+            // Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + ListDoc[i].Name);
         }
 
         private void ButtonDocAdd_Click(object sender, RoutedEventArgs e)
         {
-            Doc doc = new Doc();
+
+            if (TextBoxDocAdd.Text.Length < 5)
+            {
+                MessageBox.Show("Name zu kurz\nanderen Namen wählen");
+                return;
+            }
+            if (TextBoxDocGroupAdd.Text == "")
+            {
+                MessageBoxResult result =
+                             MessageBox.Show("Keine Gruppe angegeben\nOhne Gruppe speichern?", "Achtung", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
+            if (TextBoxDocGroupAdd.Text.Length > 5)
+            {
+                MessageBox.Show("Gruppenname darf max. 5 Buchstaben haben\nanderen Namen wählen");
+                return;
+            }
+
+            MyDoc doc = new MyDoc();
             doc.Name = TextBoxDocAdd.Text;
+            doc.Group = TextBoxDocGroupAdd.Text;
             doc.Activ = true;
 
 
+            for (int i = 0; i < ListDoc.Count; i++)
+            {
+                if (ListDoc[i].Name == doc.Name)
+                {
+                    MessageBoxResult result =
+                                MessageBox.Show("Seite existiert schon\nüberschreiben ?", "Achtung", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+
+                    ListDoc.RemoveAt(i);
+                    break;
+                }
+            }
             ListDoc.Add(doc);
+            ListDoc.Sort();
 
             WriteDocs();
 
             ListDocToView();
             TextBoxDocAdd.Text = "";
+            TextBoxDocGroupAdd.Text = "";
 
 
 
@@ -302,41 +578,41 @@ namespace MyWebSearch
 
         private void ListViewDoc_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                int selIndex = ListViewDoc.SelectedIndex;
+            //try
+            //{
+            //    int selIndex = ListViewDoc.SelectedIndex;
 
-                if (selIndex < 0)
-                {
-                    return;
-                }
+            //    if (selIndex < 0)
+            //    {
+            //        return;
+            //    }
 
-                TextBoxDocAdd.Text = ListDoc[selIndex].Name;
-
-
-
-                var x = ListViewDoc.SelectedItems;
-
-                var z = x.Count;
-
-                ListViewItem y = (ListViewItem)x[0];
+            //    TextBoxDocAdd.Text = ListDoc[selIndex].Name;
 
 
-                MessageBoxResult result = MessageBox.Show("Soll  '" + ListDoc[selIndex].Name + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    ListDoc.RemoveAt(selIndex);
-                    WriteDocs();
-                    ListDocToView();
+            //    var x = ListViewDoc.SelectedItems;
 
-                }
-            }
-            catch (Exception)
-            {
+            //    var z = x.Count;
+
+            //    ListViewItem y = (ListViewItem)x[0];
 
 
-            }
+            //    MessageBoxResult result = MessageBox.Show("Soll  '" + ListDoc[selIndex].Name + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
+
+            //    if (result == MessageBoxResult.Yes)
+            //    {
+            //        ListDoc.RemoveAt(selIndex);
+            //        WriteDocs();
+            //        ListDocToView();
+
+            //    }
+            //}
+            //catch (Exception)
+            //{
+
+
+            //}
 
         }
 
@@ -344,17 +620,42 @@ namespace MyWebSearch
         {
             int selIndex = ListViewDoc.SelectedIndex;
 
-            if (selIndex <0)
+            if (selIndex < 0)
             {
                 return;
             }
+            TextBoxDocGroupAdd.Text = ListDoc[selIndex].Group;
             TextBoxDocAdd.Text = ListDoc[selIndex].Name;
 
-            //ListDoc[selIndex].Activ = !ListDoc[selIndex].Activ;
-            //WriteDocs();
-            //ListDocToView();
+            ListViewDocItemBrushes();
+
+        }
+
+        private void ListViewDocItemBrushes()
+        {
+            for (int i = 0; i < ListViewDoc.Items.Count; i++)
+            {
+                ListViewItem lvi = (ListViewItem)ListViewDoc.Items[i];
+
+                if (lvi.IsSelected)
+                {
+                    lvi.Background = Brushes.LightBlue;
+                    continue;
+                }
+
+                MyDoc doc = (MyDoc)lvi.Content;
 
 
+                if (doc.Activ)
+                {
+                    lvi.Background = Brushes.LightGreen;
+                }
+                else
+                {
+                    lvi.Background = Brushes.White;
+                }
+
+            }
         }
 
         private void ListViewFiles_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -367,7 +668,7 @@ namespace MyWebSearch
             }
 
 
-            Properties.Settings.Default.FileIndexNow = selIndex;
+            Properties.Settings.Default.FileNameNow = ListFile[selIndex].FileName;
             Properties.Settings.Default.Save();
 
 
@@ -401,13 +702,13 @@ namespace MyWebSearch
 
                     if (ListFile.Count > 0)
                     {
-                        Properties.Settings.Default.FileIndexNow = 0;
+                        Properties.Settings.Default.FileNameNow = ListFile[0].FileName;
                         Properties.Settings.Default.Save();
                         ListViewFiles.SelectedIndex = 0;
                     }
                     else
                     {
-                        Properties.Settings.Default.FileIndexNow = -1;
+                        Properties.Settings.Default.FileNameNow = "";
                         Properties.Settings.Default.Save();
 
                     }
@@ -430,6 +731,7 @@ namespace MyWebSearch
             if (e.Key == Key.Enter)
             {
                 ButtonDocAdd_Click(null, null);
+                TextBoxDocGroupAdd.Text = "";
                 TextBoxDocAdd.Text = "";
             }
         }
@@ -448,8 +750,10 @@ namespace MyWebSearch
             if (e.Key == Key.Enter)
             {
                 ButtonSearch_Click(null, null);
-             
+
             }
         }
+
+
     }
 }

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyWebSearch
 {
-    class File
+    class MyFile
     {
+
+
         private string fileName;
 
         public string FileName
