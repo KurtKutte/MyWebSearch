@@ -43,8 +43,8 @@ namespace MyWebSearch
 
         private void IniLayout()
         {
-            MyWindow.Width = System.Windows.SystemParameters.PrimaryScreenWidth/3.0;
-            MyWindow.Height = System.Windows.SystemParameters.PrimaryScreenHeight/3.0;
+            MyWindow.Width = System.Windows.SystemParameters.PrimaryScreenWidth / 3.0;
+            MyWindow.Height = System.Windows.SystemParameters.PrimaryScreenHeight / 3.0;
         }
 
         private void ReadFiles()
@@ -235,7 +235,10 @@ namespace MyWebSearch
                     if (CheckBoxBing.IsChecked == true)
                         Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + ListDoc[i].Name);
 
-                    ListDoc[i].Activ = false;
+                    if (CheckBoxAutoOff.IsChecked == true)
+                    {
+                        ListDoc[i].Activ = false;
+                    }
                     WriteDocs();
                     ListDocToView();
                     break;
@@ -251,17 +254,25 @@ namespace MyWebSearch
         private void SearchAll(string strSearch)
         {
             LabelBusy.Content = "Abfrage läuft";
-            foreach (var item in ListDoc)
+
+            for (int i = 0; i < ListDoc.Count; i++)
             {
-                if (item.Activ)
+                if (CheckBoxGoogle.IsChecked == true)
+                    Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + ListDoc[i].Name);
+                if (CheckBoxBing.IsChecked == true)
+                    Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + ListDoc[i].Name);
+
+                if (CheckBoxAutoOff.IsChecked == true)
                 {
-                    if (CheckBoxGoogle.IsChecked == true)
-                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + item.Name);
-                    if (CheckBoxBing.IsChecked == true)
-                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + item.Name);
+                    ListDoc[i].Activ = false;
+
                 }
+                WriteDocs();
+                ListDocToView();
+
                 Thread.Sleep(2000);
             }
+
             LabelBusy.Content = "";
         }
 
@@ -470,6 +481,8 @@ namespace MyWebSearch
         {
             bool OneItemActive = false;
 
+            #region Prüfung, on ein Element aktiv (true) angewählt ist
+
             foreach (var item in ListDoc)
             {
                 if (item.Activ)
@@ -485,6 +498,9 @@ namespace MyWebSearch
                 MessageBox.Show("kein Eintrag AKTIV - Suche nicht möglich");
                 return;
             }
+
+            #endregion
+
 
             if (CheckBoxGoogle.IsChecked == false && CheckBoxBing.IsChecked == false)
             {
@@ -769,6 +785,6 @@ namespace MyWebSearch
             TextBoxSearch1.Text = "";
         }
 
-     
+
     }
 }
