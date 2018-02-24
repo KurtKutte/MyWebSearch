@@ -32,11 +32,19 @@ namespace MyWebSearch
         {
             InitializeComponent();
 
+            IniLayout();
+
             ReadFiles();
             ListFileToView();
 
             ReadDocs();
             ListDocToView();
+        }
+
+        private void IniLayout()
+        {
+            MyWindow.Width = System.Windows.SystemParameters.PrimaryScreenWidth/3.0;
+            MyWindow.Height = System.Windows.SystemParameters.PrimaryScreenHeight/3.0;
         }
 
         private void ReadFiles()
@@ -114,7 +122,8 @@ namespace MyWebSearch
         private void ListDocToView()
         {
             ListViewDoc.Items.Clear();
-            int nr = 0;
+            int docCount = 0;
+            int docActive = 0;
 
             foreach (var item in ListDoc)
             {
@@ -123,15 +132,16 @@ namespace MyWebSearch
                 if (item.Activ)
                 {
                     lvi.Background = Brushes.LightGreen;
+                    docActive += 1;
                 }
                 else
                 {
                     lvi.Background = Brushes.White;
                 }
                 ListViewDoc.Items.Add(lvi);
-                nr += 1;
+                docCount += 1;
             }
-            LabelCount.Content = nr.ToString();
+            LabelCount.Content = docActive.ToString() + " / " + docCount.ToString();
         }
 
         private void ReadDocs()
@@ -754,6 +764,11 @@ namespace MyWebSearch
             }
         }
 
+        private void ButtonSearchDelete_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxSearch1.Text = "";
+        }
 
+     
     }
 }

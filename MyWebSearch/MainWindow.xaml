@@ -1,52 +1,43 @@
-﻿<Window x:Class="MyWebSearch.MainWindow"
+﻿<Window x:Name="MyWindow" x:Class="MyWebSearch.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyWebSearch"
         mc:Ignorable="d"
-        Title="MainWindow" Height="330.113" Width="639.414">
+        Title="MyWebSearch" Height="412.113" Width="639.414">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="12*"/>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="42*"/>
-            <ColumnDefinition Width="41*"/>
-            <ColumnDefinition Width="12*"/>
-            <ColumnDefinition Width="41*"/>
-            <ColumnDefinition Width="42*"/>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="48*"/>
-            <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="177*"/>
-            <ColumnDefinition Width="79*"/>
-            <ColumnDefinition Width="38*"/>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="285*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="26*"/>
-            <RowDefinition Height="26*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="26*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="26*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="60*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="11*"/>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="11*"/>
-            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="12" Grid.Column="1" Grid.Row="12" Grid.RowSpan="5"/>
-        <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" Grid.Row="15" Grid.Column="2" ToolTip="Suche starten" Grid.ColumnSpan="2" TabIndex="1"/>
-        <TextBox x:Name="TextBoxSearch1" Grid.ColumnSpan="7" Grid.Column="5" Grid.Row="15" KeyUp="TextBoxSearch1_KeyUp" ToolTip="Suchbegriff" TabIndex="2" />
-        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="4" Grid.Column="8" Grid.RowSpan="8" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles" >
+        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="3" Grid.Column="5" Grid.RowSpan="8" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="active" DisplayMemberBinding="{Binding Activ}"/>
@@ -55,32 +46,55 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="TextBoxDocAdd" Grid.Column="10" Grid.Row="10" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seitenbasis der Suche" TabIndex="4" Grid.ColumnSpan="2" />
-        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="9" Grid.Row="10" ToolTip="Web-Seitenbasis der Suche" TabIndex="3" />
-        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="12" Grid.Row="10" Click="ButtonDocAdd_Click" ToolTip="Gruppe der Such-Seite hinzufügen" TabIndex="5" />
-        <CheckBox x:Name="CheckBoxGoogle" Content="Google" Grid.Column="5" Grid.Row="13" VerticalContentAlignment="Center" Grid.ColumnSpan="2" ToolTip="Suche mit Google"/>
-        <CheckBox x:Name="CheckBoxBing" Content="Bing" Grid.Column="8" Grid.Row="13" VerticalContentAlignment="Center" Grid.ColumnSpan="1" ToolTip="Suche mit Bing"/>
-        <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="5" Grid.Row="10" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche" Grid.ColumnSpan="2"/>
-        <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="2" Grid.Row="10" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche" Grid.ColumnSpan="2"/>
-        <ListView x:Name="ListViewFiles" Grid.ColumnSpan="5" Grid.Column="2" Grid.Row="1" Grid.RowSpan="6" MouseLeftButtonUp="ListViewFiles_MouseLeftButtonUp" MouseRightButtonUp="ListViewFiles_MouseRightButtonUp" ToolTip="Liste der Textfiles zum Gruppieren der Suche">
+        <TextBox x:Name="TextBoxDocAdd" Grid.Column="7" Grid.Row="10" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seitenbasis der Suche" TabIndex="4" Grid.ColumnSpan="2" />
+        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="6" Grid.Row="10" ToolTip="Web-Seitenbasis der Suche" TabIndex="3" />
+        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="9" Grid.Row="10" Click="ButtonDocAdd_Click" ToolTip="Gruppe der Such-Seite hinzufügen" TabIndex="5" />
+
+        <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="10" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
+        <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="1" Grid.Row="10" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche"/>
+        <ListView x:Name="ListViewFiles" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="6" MouseLeftButtonUp="ListViewFiles_MouseLeftButtonUp" MouseRightButtonUp="ListViewFiles_MouseRightButtonUp" ToolTip="Liste der Textfiles zum Gruppieren der Suche">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="File  " DisplayMemberBinding="{Binding FileName}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="2" Grid.Row="8" Click="ButtonFileAdd_Click" ToolTip="Hinzufügen eines neuen Textfiles (neue Suchgruppe)" Grid.ColumnSpan="2" TabIndex="6"/>
+        <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="1" Grid.Row="8" Click="ButtonFileAdd_Click" ToolTip="Hinzufügen eines neuen Textfiles (neue Suchgruppe)"/>
 
-        <TextBox x:Name="TextBoxFileAdd" Grid.ColumnSpan="2" Grid.Column="5" Grid.Row="8" TextWrapping="Wrap" KeyUp="TextBoxFileAdd_KeyUp" ToolTip="Suchgruppen-Name" TabIndex="7"/>
-        <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Column="12" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Daten löschen" Background="Violet"/>
-        <Button x:Name="ButtonDocActive" Content="ON" Grid.Column="12" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"/>
-        <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Column="12" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White"/>
-        <Label x:Name="LabelCount" Content="" Grid.Column="12" Grid.Row="1"/>
-        <Label x:Name="LabelBusy" Content="" Grid.Column="9" Grid.Row="13" VerticalContentAlignment="Stretch" Padding="5,0" Grid.ColumnSpan="2"/>
-        <CheckBox x:Name="CheckBoxStepMode" Content="Step" Grid.Column="2" Grid.Row="13" ToolTip="StepMode - Suche mit jedem Klick, jeweils eine Seite" IsChecked="True" Grid.ColumnSpan="2"/>
-        <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Column="12" Grid.Row="2" Click="ButtonDocActiveAll_Click" ToolTip="alle Daten aktivieren, Markierung egal" Background="LightBlue"/>
-        <Button x:Name="ButtonSyntax" Content="? Syntax" Grid.Column="11" Grid.Row="13" ToolTip="Syntax der Eingabe" Click="ButtonSyntax_Click"/>
-        <Button x:Name="ButtonPageStart" Content="Start" Grid.Column="8" Grid.Row="10" Click="ButtonPageStart_Click" ToolTip="Start direkt ohne Suche" ContentStringFormat="tool"/>
+        <TextBox x:Name="TextBoxFileAdd" Grid.Column="3" Grid.Row="8" TextWrapping="Wrap" KeyUp="TextBoxFileAdd_KeyUp" ToolTip="Suchgruppen-Name"/>
+        <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Column="9" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Daten löschen" Background="Violet"/>
+        <Button x:Name="ButtonDocActive" Content="ON" Grid.Column="9" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"/>
+        <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Column="9" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White"/>
+        <Label x:Name="LabelCount" Content="" Grid.Column="9" Grid.Row="1" ToolTip="aktive von Gesamt"/>
+        <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Column="9" Grid.Row="2" Click="ButtonDocActiveAll_Click" ToolTip="alle Daten aktivieren, Markierung egal" Background="LightBlue"/>
+        <Button x:Name="ButtonPageStart" Content="Show" Grid.Column="5" Grid.Row="10" Click="ButtonPageStart_Click" ToolTip="Start direkt ohne Suche" ContentStringFormat="tool"/>
+        <Grid x:Name="GridSearch" Grid.ColumnSpan="9" Grid.Column="1" Grid.Row="13" Grid.RowSpan="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="99*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="42*"/>
+                <ColumnDefinition Width="138*"/>
+                <ColumnDefinition Width="68*"/>
+                <ColumnDefinition Width="59*"/>
+                <ColumnDefinition Width="131*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="52*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="22*"/>
+                <RowDefinition Height="18*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" ToolTip="Suche starten" Grid.Row="1" VerticalContentAlignment="Center" TabIndex="2"/>
+            <TextBox x:Name="TextBoxSearch1"  KeyUp="TextBoxSearch1_KeyUp" ToolTip="Suchbegriff" Grid.Column="2" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="5" TabIndex="1"  />
+            <Button x:Name="ButtonSearchDelete" Content="Del" Grid.Column="8" Grid.Row="1" VerticalContentAlignment="Center" Click="ButtonSearchDelete_Click"/>
+            <Button x:Name="ButtonSyntax" Content="? Syntax      "  ToolTip="Syntax der Eingabe" Click="ButtonSyntax_Click" Grid.Column="8" />
+            <CheckBox x:Name="CheckBoxBing" Content="Bing"  ToolTip="Suche mit Bing" Grid.Column="5" VerticalContentAlignment="Center" VerticalAlignment="Center"  />
+            <CheckBox x:Name="CheckBoxGoogle" Content="Google      "  ToolTip="Suche mit Google" Grid.Column="4" VerticalContentAlignment="Center"  VerticalAlignment="Center"   />
+            <CheckBox x:Name="CheckBoxAutoOff" Content="with deselect" ToolTip=" nach Ausführung Abwahl von AKTIV" IsChecked="True" Grid.Column="3" VerticalContentAlignment="Center"  VerticalAlignment="Center"/>
+            <CheckBox x:Name="CheckBoxStepMode" Content="Step" ToolTip="StepMode - Suche mit jedem Klick, jeweils eine Seite" IsChecked="True" Grid.Column="1" VerticalContentAlignment="Center"  Grid.ColumnSpan="2"  VerticalAlignment="Center" />
+            <Label x:Name="LabelBusy" Content="" Grid.Column="6" Padding="5,0" Grid.ColumnSpan="2"/>
+        </Grid>
+
 
 
 
