@@ -9,16 +9,16 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="52*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="316*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="300*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="52*"/>
+            <ColumnDefinition Width="11*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -29,9 +29,9 @@
             <RowDefinition Height="10*"/>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition Height="20*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition Height="20*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="70*"/>
             <RowDefinition Height="10*"/>
@@ -60,12 +60,8 @@
         </ListView>
         <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="1" Grid.Row="8" Click="ButtonFileAdd_Click" ToolTip="Hinzufügen eines neuen Textfiles (neue Suchgruppe)"/>
 
-        <TextBox x:Name="TextBoxFileAdd" Grid.Column="3" Grid.Row="8" TextWrapping="Wrap" KeyUp="TextBoxFileAdd_KeyUp" ToolTip="Suchgruppen-Name"/>
-        <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Column="9" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Daten löschen" Background="Violet"/>
-        <Button x:Name="ButtonDocActive" Content="ON" Grid.Column="9" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"/>
-        <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Column="9" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White"/>
-        <Label x:Name="LabelCount" Content="" Grid.Column="9" Grid.Row="1" ToolTip="aktive von Gesamt" Grid.ColumnSpan="2" Margin="0,0,9,0"/>
-        <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Column="9" Grid.Row="2" Click="ButtonDocActiveAll_Click" ToolTip="alle Daten markieren" Background="LightBlue"/>
+        <TextBox x:Name="TextBoxFileAdd" Grid.Column="3" Grid.Row="8"  KeyUp="TextBoxFileAdd_KeyUp" ToolTip="Suchgruppen-Name"/>
+
         <Button x:Name="ButtonPageStart" Content="Show" Grid.Column="5" Grid.Row="10" Click="ButtonPageStart_Click" ToolTip="Start direkt ohne Suche" ContentStringFormat="tool"/>
         <Grid x:Name="GridSearch" Grid.ColumnSpan="9" Grid.Column="1" Grid.Row="12" Grid.RowSpan="1" Background="LightGreen">
             <Grid.ColumnDefinitions>
@@ -106,6 +102,26 @@
 
             </Grid>
         </Grid>
+        <Grid x:Name="GridLineMark" Grid.Column="9" Grid.Row="1" Grid.RowSpan="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="LabelCount" Content=""  Grid.Row="0" ToolTip="aktive von Gesamt" Grid.ColumnSpan="1" Padding="5,0" />
+            <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Row="2"  Click="ButtonDocActiveAll_Click" ToolTip="alle Daten markieren" Background="LightBlue" />
+            <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Daten löschen" Background="Violet"/>
+            <Button x:Name="ButtonDocActive" Content="ON" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"  />
+            <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White" />
+        </Grid>
+
 
 
 

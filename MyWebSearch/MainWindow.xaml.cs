@@ -785,6 +785,6 @@ namespace MyWebSearch
             TextBoxSearch1.Text = "";
         }
 
-
+    
     }
 }
