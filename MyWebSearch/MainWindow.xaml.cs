@@ -785,6 +785,79 @@ namespace MyWebSearch
             TextBoxSearch1.Text = "";
         }
 
-    
+        private void ButtonPageCheck_Click(object sender, RoutedEventArgs e)
+        {
+            List<String> listNewTerms = new List<String>();
+            List<String> listItemTerms = new List<String>();
+
+            List<String> listFound = new List<String>();
+
+
+            string[] newTerms = TextBoxDocAdd.Text.Split('/');
+          
+            for (int i = 0; i < newTerms.Length; i++)
+            {
+                if (!newTerms[i].Contains(':') & newTerms[i]!="")
+                {
+                    listNewTerms.Add(newTerms[i]);
+                }
+            }
+
+
+            foreach (var item in ListDoc)
+            {
+                string[] itemTerms = item.Name.Split('/');
+                listItemTerms.Clear();
+
+
+                for (int i = 0; i < itemTerms.Length; i++)
+                {
+                    if (!itemTerms[i].Contains(':') & itemTerms[i] != "")
+                    {
+                        listItemTerms.Add(itemTerms[i]);
+                    }
+                }
+
+
+                foreach (var termNew in listNewTerms)
+                {
+                    foreach (var termOld in listItemTerms)
+                    {
+                        if (termNew == termOld)
+                        {
+                            if (!listFound.Contains(item.Name))
+                            {
+                                listFound.Add(item.Name);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            string s = "";
+            foreach (var item in listFound)
+            {
+                if (item != TextBoxDocAdd.Text)
+                {
+                    s += item + "\n";
+                }
+            }
+
+
+            if (s=="")
+            {
+                MessageBox.Show("keine Übereinstimmung gefunden");
+            }
+            else
+            {
+
+                MessageBox.Show(TextBoxDocAdd.Text + "\n" +
+                               "-           Übereinstimmungen bei:\n" + s);
+            }
+
+
+        }
     }
 }
