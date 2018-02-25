@@ -138,6 +138,11 @@ namespace MyWebSearch
                 {
                     lvi.Background = Brushes.White;
                 }
+
+                if (item.Name.ToUpper().Contains("MICROSOFT"))
+                {
+                    lvi.FontWeight = FontWeights.Bold;
+                }
                 ListViewDoc.Items.Add(lvi);
                 docCount += 1;
             }
@@ -257,20 +262,21 @@ namespace MyWebSearch
 
             for (int i = 0; i < ListDoc.Count; i++)
             {
-                if (CheckBoxGoogle.IsChecked == true)
-                    Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + ListDoc[i].Name);
-                if (CheckBoxBing.IsChecked == true)
-                    Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + ListDoc[i].Name);
-
-                if (CheckBoxAutoOff.IsChecked == true)
+                if (ListDoc[i].Activ)
                 {
+                    if (CheckBoxGoogle.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.google.com" + "/search?q=(" + strSearch + ListDoc[i].Name);
+                    if (CheckBoxBing.IsChecked == true)
+                        Process.Start("microsoft-edge:" + "http://www.bing.de" + "/search?q=(" + strSearch + ListDoc[i].Name);
+
+
                     ListDoc[i].Activ = false;
+                    WriteDocs();
+                    ListDocToView();
 
+                    Thread.Sleep(2000);
                 }
-                WriteDocs();
-                ListDocToView();
-
-                Thread.Sleep(2000);
+             
             }
 
             LabelBusy.Content = "";
@@ -309,7 +315,7 @@ namespace MyWebSearch
                 var selItems = ListViewDoc.SelectedItems;
 
 
-                MessageBoxResult result = MessageBox.Show("Sollen die markierten Such-Seiten gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Sollen die markierten Such-Seiten (" + selItems.Count.ToString() + " Stück) gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -602,43 +608,109 @@ namespace MyWebSearch
             Process.Start("https://support.google.com/websearch/answer/2466433?hl=de");
         }
 
+        private void ButtonSearchDelete_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxSearch1.Text = "";
+        }
+
+        private void ButtonPageCheck_Click(object sender, RoutedEventArgs e)
+        {
+            List<String> listNewTerms = new List<String>();
+            List<String> listItemTerms = new List<String>();
+
+            List<String> listFound = new List<String>();
+
+
+            string[] newTerms = TextBoxDocAdd.Text.Split('/');
+
+            for (int i = 0; i < newTerms.Length; i++)
+            {
+                if (!newTerms[i].Contains(':') & newTerms[i] != "")
+                {
+                    listNewTerms.Add(newTerms[i]);
+                }
+            }
+
+
+            foreach (var item in ListDoc)
+            {
+                string[] itemTerms = item.Name.Split('/');
+                listItemTerms.Clear();
+
+
+                for (int i = 0; i < itemTerms.Length; i++)
+                {
+                    if (!itemTerms[i].Contains(':') & itemTerms[i] != "")
+                    {
+                        listItemTerms.Add(itemTerms[i]);
+                    }
+                }
+
+
+                foreach (var termNew in listNewTerms)
+                {
+                    foreach (var termOld in listItemTerms)
+                    {
+                        if (termNew == termOld)
+                        {
+                            if (!listFound.Contains(item.Name))
+                            {
+                                listFound.Add(item.Name);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            string s = "";
+            foreach (var item in listFound)
+            {
+
+                s += item + "\n";
+
+            }
+
+
+            if (s == "")
+            {
+                MessageBox.Show("keine Übereinstimmung gefunden");
+            }
+            else
+            {
+
+                MessageBox.Show(TextBoxDocAdd.Text + "\n" +
+                               "-           Übereinstimmungen bei:\n" + s);
+            }
+
+
+        }
+
+        private void ButtonAddLineClear_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxDocAdd.Text = "";
+        }
+
         private void ListViewDoc_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //try
-            //{
-            //    int selIndex = ListViewDoc.SelectedIndex;
 
-            //    if (selIndex < 0)
-            //    {
-            //        return;
-            //    }
+            int selIndex = ListViewDoc.SelectedIndex;
 
-            //    TextBoxDocAdd.Text = ListDoc[selIndex].Name;
+            if (selIndex < 0)
+            {
+                return;
+            }
 
+            TextBoxDocAdd.Text = ListDoc[selIndex].Name;
 
 
-            //    var x = ListViewDoc.SelectedItems;
+            ListDoc[selIndex].Activ = !ListDoc[selIndex].Activ;
 
-            //    var z = x.Count;
-
-            //    ListViewItem y = (ListViewItem)x[0];
-
-
-            //    MessageBoxResult result = MessageBox.Show("Soll  '" + ListDoc[selIndex].Name + "' gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
-
-            //    if (result == MessageBoxResult.Yes)
-            //    {
-            //        ListDoc.RemoveAt(selIndex);
-            //        WriteDocs();
-            //        ListDocToView();
-
-            //    }
-            //}
-            //catch (Exception)
-            //{
+            WriteDocs();
+            ListDocToView();
 
 
-            //}
 
         }
 
@@ -780,84 +852,6 @@ namespace MyWebSearch
             }
         }
 
-        private void ButtonSearchDelete_Click(object sender, RoutedEventArgs e)
-        {
-            TextBoxSearch1.Text = "";
-        }
 
-        private void ButtonPageCheck_Click(object sender, RoutedEventArgs e)
-        {
-            List<String> listNewTerms = new List<String>();
-            List<String> listItemTerms = new List<String>();
-
-            List<String> listFound = new List<String>();
-
-
-            string[] newTerms = TextBoxDocAdd.Text.Split('/');
-          
-            for (int i = 0; i < newTerms.Length; i++)
-            {
-                if (!newTerms[i].Contains(':') & newTerms[i]!="")
-                {
-                    listNewTerms.Add(newTerms[i]);
-                }
-            }
-
-
-            foreach (var item in ListDoc)
-            {
-                string[] itemTerms = item.Name.Split('/');
-                listItemTerms.Clear();
-
-
-                for (int i = 0; i < itemTerms.Length; i++)
-                {
-                    if (!itemTerms[i].Contains(':') & itemTerms[i] != "")
-                    {
-                        listItemTerms.Add(itemTerms[i]);
-                    }
-                }
-
-
-                foreach (var termNew in listNewTerms)
-                {
-                    foreach (var termOld in listItemTerms)
-                    {
-                        if (termNew == termOld)
-                        {
-                            if (!listFound.Contains(item.Name))
-                            {
-                                listFound.Add(item.Name);
-                            }
-                        }
-                    }
-
-                }
-            }
-
-
-            string s = "";
-            foreach (var item in listFound)
-            {
-                if (item != TextBoxDocAdd.Text)
-                {
-                    s += item + "\n";
-                }
-            }
-
-
-            if (s=="")
-            {
-                MessageBox.Show("keine Übereinstimmung gefunden");
-            }
-            else
-            {
-
-                MessageBox.Show(TextBoxDocAdd.Text + "\n" +
-                               "-           Übereinstimmungen bei:\n" + s);
-            }
-
-
-        }
     }
 }

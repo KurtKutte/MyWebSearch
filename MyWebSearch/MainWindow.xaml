@@ -15,7 +15,8 @@
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="36*"/>
             <ColumnDefinition Width="36*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="37*"/>
             <ColumnDefinition Width="300*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="52*"/>
@@ -32,7 +33,7 @@
             <RowDefinition Height="89*"/>
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="4" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles" >
+        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="5" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles - RechtsKlick: toggle ACTIVE" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="active" DisplayMemberBinding="{Binding Activ}"/>
@@ -41,9 +42,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="TextBoxDocAdd" Grid.Column="8" Grid.Row="5" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
-        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="7" Grid.Row="5" ToolTip="Web-Seite Gruppe" TabIndex="3" />
-        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="10" Grid.Row="5" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
+        <TextBox x:Name="TextBoxDocAdd" Grid.Column="9" Grid.Row="5" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
+        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="7" Grid.Row="5" ToolTip="Web-Seite Gruppe" TabIndex="3" Grid.ColumnSpan="2" />
+        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="5" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
 
         <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="5" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
         <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="1" Grid.Row="5" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche"/>
@@ -61,7 +62,7 @@
         <Button x:Name="ButtonPageStart" Content="Show" Grid.Column="5" Grid.Row="5" Click="ButtonPageStart_Click" ToolTip="Web-Seite direkt starten ohne Suche mit Bing/Google" ContentStringFormat="tool"/>
         <Button x:Name="ButtonPageCheck" Content="Check" Grid.Column="6" Grid.Row="5" Click="ButtonPageCheck_Click" ToolTip="Web-Seite in Liste suchen" ContentStringFormat="tool"/>
 
-        <Grid x:Name="GridSearch" Grid.ColumnSpan="10" Grid.Column="1" Grid.Row="7" Grid.RowSpan="1" Background="LightGreen">
+        <Grid x:Name="GridSearch" Grid.ColumnSpan="11" Grid.Column="1" Grid.Row="7" Grid.RowSpan="1" Background="LightGreen">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="21*"/>
@@ -73,7 +74,8 @@
                 <ColumnDefinition Width="59*"/>
                 <ColumnDefinition Width="82*"/>
                 <ColumnDefinition Width="21*"/>
-                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="27*"/>
+                <ColumnDefinition Width="53*"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -83,10 +85,10 @@
                 <RowDefinition Height="23*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" ToolTip="Suche starten" Grid.Row="3" VerticalContentAlignment="Center" TabIndex="2" Grid.Column="10"/>
-            <TextBox x:Name="TextBoxSearch1"  KeyUp="TextBoxSearch1_KeyUp" ToolTip="Suchbegriff" Grid.Column="3" Grid.Row="3" VerticalContentAlignment="Center" Grid.ColumnSpan="6" TabIndex="1"  />
+            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" ToolTip="Suche starten" Grid.Row="3" VerticalContentAlignment="Center" TabIndex="2" Grid.Column="10" Grid.ColumnSpan="2" BorderThickness="2"/>
+            <TextBox x:Name="TextBoxSearch1"  KeyUp="TextBoxSearch1_KeyUp" ToolTip="Suchbegriff" Grid.Column="3" Grid.Row="3" VerticalContentAlignment="Center" Grid.ColumnSpan="6" TabIndex="1" BorderThickness="2" BorderBrush="Gray"  />
             <Button x:Name="ButtonSearchDelete" Content="x" Grid.Column="1" Grid.Row="3" VerticalContentAlignment="Center" Click="ButtonSearchDelete_Click" ToolTip="Suchzeile löschen"/>
-            <Button x:Name="ButtonSyntax" Content="? Syntax      "  ToolTip="Syntax der Eingabe" Click="ButtonSyntax_Click" Grid.Column="10" Grid.Row="1" />
+            <Button x:Name="ButtonSyntax" Content="? Syntax      "  ToolTip="Syntax der Eingabe" Click="ButtonSyntax_Click" Grid.Column="11" Grid.Row="1" />
             <CheckBox x:Name="CheckBoxBing" Content="Bing"  ToolTip="Suche mit Bing" Grid.Column="7" VerticalContentAlignment="Center"  Grid.Row="1"  />
             <CheckBox x:Name="CheckBoxGoogle" Content="Google      "  ToolTip="Suche mit Google" Grid.Column="6" VerticalContentAlignment="Center"  Grid.Row="1"   />
             <Label x:Name="LabelBusy" Content="" Grid.Column="8" Padding="5,0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2"/>
@@ -100,7 +102,7 @@
 
             </Grid>
         </Grid>
-        <Grid x:Name="GridLineMark" Grid.Column="10" Grid.Row="1" Grid.RowSpan="3">
+        <Grid x:Name="GridLineMark" Grid.Column="11" Grid.Row="1" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*"/>
                 <RowDefinition Height="10*"/>
@@ -119,6 +121,7 @@
             <Button x:Name="ButtonDocActive" Content="ON" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"  />
             <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White" />
         </Grid>
+        <Button x:Name="ButtonAddLineClear" Content="x" Grid.Column="7" Grid.Row="5" Click="ButtonAddLineClear_Click"/>
 
 
 
