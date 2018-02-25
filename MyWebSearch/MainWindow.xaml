@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MyWebSearch"
         mc:Ignorable="d"
         Title="MyWebSearch" Height="412.113" Width="639.414">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
@@ -23,17 +24,24 @@
             <ColumnDefinition Width="11*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="13*"/>
-            <RowDefinition Height="178*"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="174*"/>
             <RowDefinition Height="12*"/>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="13*"/>
             <RowDefinition Height="25*"/>
-            <RowDefinition Height="13*"/>
-            <RowDefinition Height="26*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="89*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="87*"/>
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="5" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="1" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles - RechtsKlick: toggle ACTIVE" >
+        <Menu Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="13">
+            <MenuItem Header="_Extra">
+                <MenuItem Header="_Config" Background="LightCoral" Click="MnuConfig_Click" />
+            </MenuItem>
+            
+        </Menu>
+        <ListView x:Name="ListViewDoc" Grid.ColumnSpan="5" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="2" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles - RechtsKlick: toggle ACTIVE" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="active" DisplayMemberBinding="{Binding Activ}"/>
@@ -42,27 +50,27 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="TextBoxDocAdd" Grid.Column="9" Grid.Row="5" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
-        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="7" Grid.Row="5" ToolTip="Web-Seite Gruppe" TabIndex="3" Grid.ColumnSpan="2" />
-        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="5" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
+        <TextBox x:Name="TextBoxDocAdd" Grid.Column="9" Grid.Row="6" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
+        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="7" Grid.Row="6" ToolTip="Web-Seite Gruppe" TabIndex="3" Grid.ColumnSpan="2" />
+        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="6" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
 
-        <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="5" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
-        <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="1" Grid.Row="5" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche"/>
-        <ListView x:Name="ListViewFiles" Grid.ColumnSpan="3" Grid.Row="1" MouseLeftButtonUp="ListViewFiles_MouseLeftButtonUp" MouseRightButtonUp="ListViewFiles_MouseRightButtonUp" ToolTip="Liste der Textfiles zum Gruppieren der Suche" Grid.Column="1">
+        <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="6" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
+        <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="1" Grid.Row="6" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche"/>
+        <ListView x:Name="ListViewFiles" Grid.ColumnSpan="3" Grid.Row="2" MouseLeftButtonUp="ListViewFiles_MouseLeftButtonUp" MouseRightButtonUp="ListViewFiles_MouseRightButtonUp" ToolTip="Liste der Textfiles zum Gruppieren der Suche" Grid.Column="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="File  " DisplayMemberBinding="{Binding FileName}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="1" Grid.Row="3" Click="ButtonFileAdd_Click" ToolTip="Hinzufügen eines neuen Textfiles (neue Suchgruppe)"/>
+        <Button x:Name="ButtonFileAdd" Content="Add File" Grid.Column="1" Grid.Row="4" Click="ButtonFileAdd_Click" ToolTip="Hinzufügen eines neuen Textfiles (neue Suchgruppe)"/>
 
-        <TextBox x:Name="TextBoxFileAdd" Grid.Column="3" Grid.Row="3"  KeyUp="TextBoxFileAdd_KeyUp" ToolTip="TextFile-Name für Suche"/>
+        <TextBox x:Name="TextBoxFileAdd" Grid.Column="3" Grid.Row="4"  KeyUp="TextBoxFileAdd_KeyUp" ToolTip="TextFile-Name für Suche"/>
 
-        <Button x:Name="ButtonPageStart" Content="Show" Grid.Column="5" Grid.Row="5" Click="ButtonPageStart_Click" ToolTip="Web-Seite direkt starten ohne Suche mit Bing/Google" ContentStringFormat="tool"/>
-        <Button x:Name="ButtonPageCheck" Content="Check" Grid.Column="6" Grid.Row="5" Click="ButtonPageCheck_Click" ToolTip="Web-Seite in Liste suchen" ContentStringFormat="tool"/>
+        <Button x:Name="ButtonPageStart" Content="Show" Grid.Column="5" Grid.Row="6" Click="ButtonPageStart_Click" ToolTip="Web-Seite direkt starten ohne Suche mit Bing/Google" ContentStringFormat="tool"/>
+        <Button x:Name="ButtonPageCheck" Content="Check" Grid.Column="6" Grid.Row="6" Click="ButtonPageCheck_Click" ToolTip="Web-Seite in Liste suchen" ContentStringFormat="tool"/>
 
-        <Grid x:Name="GridSearch" Grid.ColumnSpan="11" Grid.Column="1" Grid.Row="7" Grid.RowSpan="1" Background="LightGreen">
+        <Grid x:Name="GridSearch" Grid.ColumnSpan="11" Grid.Column="1" Grid.Row="8" Grid.RowSpan="1" Background="LightGreen">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="21*"/>
@@ -102,7 +110,7 @@
 
             </Grid>
         </Grid>
-        <Grid x:Name="GridLineMark" Grid.Column="11" Grid.Row="1" Grid.RowSpan="3">
+        <Grid x:Name="GridLineMark" Grid.Column="11" Grid.Row="2" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*"/>
                 <RowDefinition Height="10*"/>
@@ -121,7 +129,7 @@
             <Button x:Name="ButtonDocActive" Content="ON" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"  />
             <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White" />
         </Grid>
-        <Button x:Name="ButtonAddLineClear" Content="x" Grid.Column="7" Grid.Row="5" Click="ButtonAddLineClear_Click"/>
+        <Button x:Name="ButtonAddLineClear" Content="x" Grid.Column="7" Grid.Row="6" Click="ButtonAddLineClear_Click"/>
 
 
 

@@ -46,5 +46,17 @@ namespace MyWebSearch.Properties {
                 this["FileNameNow"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyPath {
+            get {
+                return ((string)(this["MyPath"]));
+            }
+            set {
+                this["MyPath"] = value;
+            }
+        }
     }
 }

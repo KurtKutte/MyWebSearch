@@ -49,28 +49,36 @@ namespace MyWebSearch
 
         private void ReadFiles()
         {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (!Directory.Exists(docPath + "\\MyWebSearch"))
+            string docPath = Properties.Settings.Default.MyPath; 
+
+            if (!Directory.Exists(docPath))
             {
-                MessageBoxResult result = MessageBox.Show("Ordner 'MyWebSearch' im Dokumenten-Verzeichnis existiert nicht\nEinrichten ?", "Achtung", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Ein Ordner für 'MyWebSearch' existiert nicht\nSoll er in 'Eigene Dateien' eingerichtet werden?", "Achtung", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    Directory.CreateDirectory(docPath + "\\MyWebSearch");
-                    MyPath = docPath + "\\MyWebSearch";
+                    Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + "MyWebSearch") ;
+                    MyPath = Properties.Settings.Default.MyPath;
+            
+                }
+                else
+                {
+                    return;
                 }
 
 
             }
             else
             {
-                MyPath = docPath + "\\MyWebSearch";
+                MyPath = docPath ;
             }
 
 
 
 
             string[] files = System.IO.Directory.GetFiles(MyPath, "*.txt", System.IO.SearchOption.TopDirectoryOnly);
+            ListFile.Clear();
+
             if (files.Length > 0)
             {
                 foreach (var item in files)
@@ -84,7 +92,7 @@ namespace MyWebSearch
             else
             {
 
-                System.IO.File.WriteAllText(MyPath + "\\" + "MyWebSearch.txt", "wikipedia.de" + "\t" + "true");
+                System.IO.File.WriteAllText(MyPath + "\\" + "MyWebSearch.txt", "\t" + "wikipedia.de" + "\t" + "true");
 
                 MyFile f = new MyFile();
                 f.FileName = "MyWebSearch.txt";
@@ -280,6 +288,19 @@ namespace MyWebSearch
             }
 
             LabelBusy.Content = "";
+        }
+
+        private void MnuConfig_Click(object sender, RoutedEventArgs e)
+        {
+            WindowConfig winConf = new WindowConfig();
+            winConf.ShowDialog();
+
+            ReadFiles();
+            ListFileToView();
+
+            ReadDocs();
+            ListDocToView();
+
         }
 
         private void ButtonDocActiveAll_Click(object sender, RoutedEventArgs e)
@@ -852,6 +873,6 @@ namespace MyWebSearch
             }
         }
 
-
+    
     }
 }
