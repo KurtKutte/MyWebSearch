@@ -39,7 +39,7 @@
             <MenuItem Header="                   ">
                
             </MenuItem>
-            <MenuItem Header="_Extra">
+            <MenuItem Header="_Extra" ToolTip="Config ...">
                 <MenuItem Header="_Config" Background="LightCoral" Click="MnuConfig_Click" />
             </MenuItem>
 
@@ -55,7 +55,7 @@
         </ListView>
         <TextBox x:Name="TextBoxDocAdd" Grid.Column="9" Grid.Row="6" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
         <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="8" Grid.Row="6" ToolTip="Web-Seite Gruppe" TabIndex="3" />
-        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="6" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
+        <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="6" Click="ButtonDocAdd_Click" ToolTip="Link zur Web-Seite hinzufügen" TabIndex="5" />
 
         <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="6" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
         <Button x:Name="ButtonLinkBing" Content="? Bing" Grid.Column="1" Grid.Row="6" Click="ButtonLinkBing_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Bing-Suche"/>
@@ -96,7 +96,7 @@
                 <RowDefinition Height="23*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" ToolTip="Suche starten" Grid.Row="3" VerticalContentAlignment="Center" TabIndex="2" Grid.Column="10" Grid.ColumnSpan="2" BorderThickness="2"/>
+            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" ToolTip="Suche starten in aktivierter Web-Seite" Grid.Row="3" VerticalContentAlignment="Center" TabIndex="2" Grid.Column="10" Grid.ColumnSpan="2" BorderThickness="2"/>
             <TextBox x:Name="TextBoxSearch1"  KeyUp="TextBoxSearch1_KeyUp" ToolTip="Suchbegriff" Grid.Column="3" Grid.Row="3" VerticalContentAlignment="Center" Grid.ColumnSpan="6" TabIndex="1" BorderThickness="2" BorderBrush="Gray"  />
             <Button x:Name="ButtonSearchDelete" Content="x" Grid.Column="1" Grid.Row="3" VerticalContentAlignment="Center" Click="ButtonSearchDelete_Click" ToolTip="Suchzeile löschen"/>
             <Button x:Name="ButtonSyntax" Content="? Syntax      "  ToolTip="Syntax der Eingabe" Click="ButtonSyntax_Click" Grid.Column="11" Grid.Row="1" />
@@ -127,10 +127,10 @@
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
             <Label x:Name="LabelCount" Content=""  Grid.Row="0" ToolTip="aktive von Gesamt" Grid.ColumnSpan="1" Padding="5,0" />
-            <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Row="2"  Click="ButtonDocActiveAll_Click" ToolTip="alle Daten markieren" Background="LightBlue" />
-            <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Daten löschen" Background="Violet"/>
-            <Button x:Name="ButtonDocActive" Content="ON" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Daten aktivieren" Background="LightGreen"  />
-            <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Daten deaktivieren" Background="White" />
+            <Button x:Name="ButtonDocActiveAll" Content="All" Grid.Row="2"  Click="ButtonDocActiveAll_Click" ToolTip="alle Links markieren" Background="LightBlue" />
+            <Button x:Name="ButtonDocsDelete" Content="Del" Grid.Row="4" Click="ButtonDocsDelete_Click" ToolTip="markierte Links löschen" Background="Violet"/>
+            <Button x:Name="ButtonDocActive" Content="ON" Grid.Row="6" Click="ButtonDocActive_Click" ToolTip="markierte Links aktivieren" Background="LightGreen"  />
+            <Button x:Name="ButtonDocsFalse" Content="OFF" Grid.Row="8" Click="ButtonDocsFalse_Click" ToolTip="markierte Links deaktivieren" Background="White" />
         </Grid>
         <Button x:Name="ButtonAddLineClear" Content="x" Grid.Column="7" Grid.Row="6" Click="ButtonAddLineClear_Click"/>
 
