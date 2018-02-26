@@ -6,10 +6,10 @@
       <Value Profile="(Default)">-1</Value>
     </Setting>
     <Setting Name="FileNameNow" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
     <Setting Name="MyPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">""</Value>
     </Setting>
   </Settings>
 </SettingsFile>

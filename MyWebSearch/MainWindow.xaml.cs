@@ -57,16 +57,15 @@ namespace MyWebSearch
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + "MyWebSearch") ;
-                    MyPath = Properties.Settings.Default.MyPath;
-            
+                    MyPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + "MyWebSearch";
+                    Directory.CreateDirectory(MyPath) ;
+                    Properties.Settings.Default.MyPath = MyPath;
+                    Properties.Settings.Default.Save();
                 }
                 else
                 {
                     return;
                 }
-
-
             }
             else
             {
