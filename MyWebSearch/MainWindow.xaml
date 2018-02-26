@@ -17,8 +17,8 @@
             <ColumnDefinition Width="36*"/>
             <ColumnDefinition Width="36*"/>
             <ColumnDefinition Width="14*"/>
-            <ColumnDefinition Width="37*"/>
-            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="289*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="52*"/>
             <ColumnDefinition Width="11*"/>
@@ -36,10 +36,13 @@
             <RowDefinition Height="13*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="13">
+            <MenuItem Header="                   ">
+               
+            </MenuItem>
             <MenuItem Header="_Extra">
                 <MenuItem Header="_Config" Background="LightCoral" Click="MnuConfig_Click" />
             </MenuItem>
-            
+
         </Menu>
         <ListView x:Name="ListViewDoc" Grid.ColumnSpan="5" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="2" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles - RechtsKlick: toggle ACTIVE" >
             <ListView.View>
@@ -51,7 +54,7 @@
             </ListView.View>
         </ListView>
         <TextBox x:Name="TextBoxDocAdd" Grid.Column="9" Grid.Row="6" KeyUp="TextBoxDocAdd_KeyUp" ToolTip="Web-Seite " TabIndex="4" Grid.ColumnSpan="2" />
-        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="7" Grid.Row="6" ToolTip="Web-Seite Gruppe" TabIndex="3" Grid.ColumnSpan="2" />
+        <TextBox x:Name="TextBoxDocGroupAdd" Grid.Column="8" Grid.Row="6" ToolTip="Web-Seite Gruppe" TabIndex="3" />
         <Button x:Name="ButtonDocAdd" Content="Add" Grid.Column="11" Grid.Row="6" Click="ButtonDocAdd_Click" ToolTip="Such-Seiten hinzufügen" TabIndex="5" />
 
         <Button x:Name="ButtonLinkGoogle" Content="? Google" Grid.Column="3" Grid.Row="6" Click="ButtonLinkGoogle_Click" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" ToolTip="Info über Google-Suche"/>
@@ -105,8 +108,8 @@
                     <ColumnDefinition Width="75*"/>
                     <ColumnDefinition Width="107*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox x:Name="CheckBoxStepMode" Content="Step" ToolTip="StepMode - Suche mit jedem Klick, jeweils eine Seite" IsChecked="True" VerticalContentAlignment="Center"   />
-                <CheckBox x:Name="CheckBoxAutoOff" Content="with deselect" ToolTip=" nach Ausführung Abwahl von AKTIV" IsChecked="True" Grid.Column="1" VerticalContentAlignment="Center"  />
+                <CheckBox x:Name="CheckBoxStepMode" Content="Step" ToolTip="StepMode - Suche mit jedem Klick, jeweils eine Seite" IsChecked="True" VerticalContentAlignment="Center" IsEnabled="False"   />
+                <CheckBox x:Name="CheckBoxAutoOff" Content="with deselect" ToolTip=" nach ausgeführter Suche wird Link in Liste deaktiviert" Grid.Column="1" VerticalContentAlignment="Center"  />
 
             </Grid>
         </Grid>

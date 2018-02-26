@@ -25,13 +25,13 @@ namespace MyWebSearch.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
-        public int FileIndexNow {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StepEnable {
             get {
-                return ((int)(this["FileIndexNow"]));
+                return ((bool)(this["StepEnable"]));
             }
             set {
-                this["FileIndexNow"] = value;
+                this["StepEnable"] = value;
             }
         }
         

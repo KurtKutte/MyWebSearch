@@ -26,6 +26,7 @@ namespace MyWebSearch
             InitializeComponent();
             IniLayout();
             TextBoxPath.Text = Properties.Settings.Default.MyPath;
+            CheckBoxStepEnable.IsChecked = Properties.Settings.Default.StepEnable;
 
         }
 
@@ -61,6 +62,16 @@ namespace MyWebSearch
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             WindowConf.Close();
+        }
+
+        private void CheckBoxStepEnable_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckBoxStepEnable.IsChecked==true)
+                Properties.Settings.Default.StepEnable = true;
+            else
+                Properties.Settings.Default.StepEnable = false;
+
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -9,26 +9,35 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="66*"/>
-            <ColumnDefinition Width="29*"/>
-            <ColumnDefinition Width="292*"/>
+            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="259*"/>
             <ColumnDefinition Width="64*"/>
             <ColumnDefinition Width="19"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="21*"/>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="113*"/>
-            <RowDefinition Height="21*"/>
-            <RowDefinition Height="37*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Button x:Name="ButtonFolderBrowserDiaglog" Content="Path" Click="ButtonFolderBrowserDiaglog_Click" Grid.Row="3" Grid.Column="1"/>
-        <TextBox x:Name="TextBoxPath" Grid.Column="3" Grid.Row="3" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
-        <Label x:Name="LabelPath" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" Padding="5,0" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Content="Directory DATA :" Grid.ColumnSpan="2"/>
-        <Button x:Name="ButtonClose" Content="Close" Grid.Column="4" Grid.Row="5" Click="ButtonClose_Click"/>
-        <Label x:Name="LabelVersion" Content="V1.0 - 25.2.2018" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Padding="5,0"/>
+        <TextBox x:Name="TextBoxPath" Grid.Column="3" Grid.Row="3" TextWrapping="Wrap" Grid.ColumnSpan="3"/>
+        <Label x:Name="LabelPath" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" Padding="5,0" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Content="Directory DATA :" Grid.ColumnSpan="3"/>
+        <Button x:Name="ButtonClose" Content="Close" Grid.Column="5" Grid.Row="10" Click="ButtonClose_Click"/>
+        <Label x:Name="LabelVersion" Content="V1.0 - 26.2.2018" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="4" Padding="5,0"/>
+        <CheckBox x:Name="CheckBoxStepEnable" Content="Step Enable" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Click="CheckBoxStepEnable_Click" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="LabelCheckBoxStep" Content="versuchsweise Abwahl von Step ermöglichen" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
 
     </Grid>
 </Window>

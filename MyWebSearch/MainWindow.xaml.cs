@@ -39,6 +39,11 @@ namespace MyWebSearch
 
             ReadDocs();
             ListDocToView();
+
+            if (Properties.Settings.Default.StepEnable == true)
+                CheckBoxStepMode.IsEnabled = true;
+            else
+                CheckBoxStepMode.IsEnabled = false;
         }
 
         private void IniLayout()
@@ -300,6 +305,11 @@ namespace MyWebSearch
             ReadDocs();
             ListDocToView();
 
+            if (Properties.Settings.Default.StepEnable == true)
+                CheckBoxStepMode.IsEnabled = true;
+            else
+                CheckBoxStepMode.IsEnabled = false;
+
         }
 
         private void ButtonDocActiveAll_Click(object sender, RoutedEventArgs e)
@@ -506,6 +516,7 @@ namespace MyWebSearch
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)
         {
             bool OneItemActive = false;
+            int ItemActiceCount = 0;
 
             #region Prüfung, on ein Element aktiv (true) angewählt ist
 
@@ -514,7 +525,7 @@ namespace MyWebSearch
                 if (item.Activ)
                 {
                     OneItemActive = true;
-                    break;
+                    ItemActiceCount += 1;
                 }
 
             }
@@ -524,6 +535,17 @@ namespace MyWebSearch
                 MessageBox.Show("kein Eintrag AKTIV - Suche nicht möglich");
                 return;
             }
+
+            if (ItemActiceCount>1 && CheckBoxAutoOff.IsChecked==false)
+            {
+                MessageBox.Show("Achtung - 'with deselect' ist nicht aktiviert,\n" +
+                                 "dadurch wird immer nur die erste grün markierte Seite angewählt\n"+
+                                 "");
+              
+            }
+
+
+
 
             #endregion
 
