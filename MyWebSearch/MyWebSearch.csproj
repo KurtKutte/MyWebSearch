@@ -68,7 +68,7 @@
     <ManifestCertificateThumbprint>09C36B1AEC14433D2A059AAC817C99C8609D2D65</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>www.ico</ApplicationIcon>
+    <ApplicationIcon>MyWindowsSearch.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -154,7 +154,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="www.ico" />
+    <Resource Include="MyWindowsSearch.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

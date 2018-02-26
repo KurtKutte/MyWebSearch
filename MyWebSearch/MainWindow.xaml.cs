@@ -345,7 +345,7 @@ namespace MyWebSearch
                 var selItems = ListViewDoc.SelectedItems;
 
 
-                MessageBoxResult result = MessageBox.Show("Sollen die markierten Such-Seiten (" + selItems.Count.ToString() + " Stück) gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Sollen die markierten Such-Seiten (" + selItems.Count.ToString() + " Link) gelöscht werden?", "Achtung", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
