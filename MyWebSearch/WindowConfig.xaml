@@ -35,7 +35,7 @@
         <TextBox x:Name="TextBoxPath" Grid.Column="3" Grid.Row="3" TextWrapping="Wrap" Grid.ColumnSpan="3"/>
         <Label x:Name="LabelPath" Grid.Column="3" Grid.Row="2" VerticalContentAlignment="Center" Padding="5,0" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Content="Directory DATA :" Grid.ColumnSpan="3"/>
         <Button x:Name="ButtonClose" Content="Close" Grid.Column="5" Grid.Row="10" Click="ButtonClose_Click"/>
-        <Label x:Name="LabelVersion" Content="V1.0 - 26.2.2018" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="4" Padding="5,0"/>
+        <Label x:Name="LabelVersion" Content="V1.0 - 27.2.2018" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="4" Padding="5,0"/>
         <CheckBox x:Name="CheckBoxStepEnable" Content="Step Enable" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Click="CheckBoxStepEnable_Click" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="LabelCheckBoxStep" Content="versuchsweise Abwahl von Step ermöglichen" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
 

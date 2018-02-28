@@ -37,12 +37,19 @@
         </Grid.RowDefinitions>
         <Menu Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="13">
             <MenuItem Header="                   ">
-               
             </MenuItem>
-            <MenuItem Header="_Extra" ToolTip="Config ...">
-                <MenuItem Header="_Config" Background="LightCoral" Click="MnuConfig_Click" />
+            <MenuItem Header="Extra  " ToolTip="Config ...">
+                <MenuItem Header="_Config"  Click="MnuConfig_Click" />
             </MenuItem>
-
+            <MenuItem Header="Help" ToolTip="Videos ...">
+                <MenuItem Header="Video: Directory"  Click="MnuDir_Click" />
+                <MenuItem Header="Video: Add 1.Link"  Click="MnuAddLink1_Click" />
+                <MenuItem Header="Video: Add 2.Link"  Click="MnuAddLink2_Click" />
+                <MenuItem Header="Video: Search 1.Link"  Click="MnuSearchLink1_Click" />
+                <MenuItem Header="Video: Search 2.Link"  Click="MnuSearchLink2_Click" />
+                <MenuItem Header="Video: Search StepByStep"  Click="MnuSearchStepByStep_Click" />
+                <MenuItem Header="Video: Selection"  Click="MnuSelection_Click" />
+            </MenuItem>
         </Menu>
         <ListView x:Name="ListViewDoc" Grid.ColumnSpan="5" Grid.Column="5" Grid.RowSpan="3" MouseRightButtonUp="ListViewDoc_MouseRightButtonUp" Grid.Row="2" MouseLeftButtonUp="ListViewDoc_MouseLeftButtonUp" ToolTip="Such-Seiten des ausgewählten Textfiles - RechtsKlick: toggle ACTIVE" >
             <ListView.View>

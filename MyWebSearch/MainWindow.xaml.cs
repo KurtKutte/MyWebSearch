@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -310,6 +312,113 @@ namespace MyWebSearch
             else
                 CheckBoxStepMode.IsEnabled = false;
 
+        }
+
+        private void MnuDir_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName( System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "MyPath.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void MnuAddLink1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "FirstAdd.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void MnuAddLink2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "SecondAdd.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MnuSearchLink1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "FirstSearch.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void MnuSearchLink2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "SecondSearch.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void MnuSearchStepByStep_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "StepByStep.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void MnuSelection_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string exePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string resPath = exePath + "\\" + "Resources";
+
+                Process.Start(resPath + "\\" + "Selection.mpg");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ButtonDocActiveAll_Click(object sender, RoutedEventArgs e)
